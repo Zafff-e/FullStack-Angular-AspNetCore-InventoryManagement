@@ -1,0 +1,78 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <div>
+          <h2 class="fw-bold mb-1"><i class="bi bi-tags-fill text-info me-2"></i>Categories Management</h2>
+          <p class="text-muted small mb-0">View, add, edit, or delete product inventory categories</p>
+        </div>
+      </div>
+
+      <!-- Category Form -->
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4">
+          <form (ngSubmit)="saveCategory()" class="row g-2 align-items-center">
+            <div class="col-sm-8">
+              <label for="categoryName" class="form-label small fw-semibold visually-hidden">Category Name</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light"><i class="bi bi-tag"></i></span>
+                <input type="text" id="categoryName" name="categoryName" class="form-control"
+                       [(ngModel)]="categoryName" placeholder="Enter Category Name (e.g. Electronics)" required />
+              </div>
+            </div>
+            <div class="col-sm-4 d-flex gap-2">
+              <button type="submit" class="btn btn-primary flex-grow-1 rounded-3">
+                <i class="bi" [ngClass]="editingCategory ? 'bi-check-lg' : 'bi-plus-lg'"></i>
+                {{ editingCategory ? 'Update' : 'Add Category' }}
+              </button>
+              @if (editingCategory) {
+                <button type="button" class="btn btn-outline-secondary rounded-3" (click)="cancelEdit()">Cancel</button>
+              }
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Category List Table -->
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+          @if (isLoading) {
+            <div class="text-center py-4">
+              <div class="spinner-border text-primary" role="status"></div>
+            </div>
+          } @else if (categories && categories.length > 0) {
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th style="width: 80px" class="text-center"># ID</th>
+                    <th>Category Name</th>
+                    <th style="width: 150px" class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (cat of categories; track cat.categoryId) {
+                    <tr>
+                      <td class="text-center fw-bold text-muted">{{ cat.categoryId }}</td>
+                      <td class="fw-semibold">{{ cat.categoryName }}</td>
+                      <td class="text-center">
+                        <button class="btn btn-outline-primary btn-sm me-1 rounded-2" (click)="editCategory(cat)">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm rounded-2" (click)="deleteCategory(cat.categoryId)">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          } @else {
+            <div class="text-center py-4 text-muted">No categories available.</div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

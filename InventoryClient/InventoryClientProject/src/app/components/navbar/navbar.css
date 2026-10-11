@@ -1,0 +1,7 @@
+.navbar {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+}
+.nav-link.active {
+  color: #38bdf8 !important;
+  font-weight: 600;
+}
