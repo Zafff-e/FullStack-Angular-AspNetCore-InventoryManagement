@@ -7,7 +7,7 @@ export interface Brand {
 export interface Product {
   productId?: number;
   productName: string;
-  manufacturingDate: string;   // "yyyy-MM-dd" -> works directly with <input type="date">
+  manufacturingDate: string;   
   serialNo: string;
   imageUrl?: string;
   isAvailable: boolean;

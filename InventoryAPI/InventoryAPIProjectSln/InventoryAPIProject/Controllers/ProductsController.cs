@@ -207,6 +207,7 @@ namespace InventoryAPIProject.Controllers
 
                     foreach (var updateBrand in product.Brands)
                     {
+                        updateBrand.ProductId = id;
                         var existingBrand = existingProduct.Brands.FirstOrDefault(b => b.BrandId == updateBrand.BrandId);
                         if (existingBrand != null)
                         {
@@ -215,16 +216,14 @@ namespace InventoryAPIProject.Controllers
                         }
                         else
                         {
+                            updateBrand.ProductId = id;
                             existingProduct.Brands.Add(updateBrand);
                         }
                     }
 
                     await _db.SaveChangesAsync();
 
-                    foreach (var brand in existingProduct.Brands)
-                    {
-                        brand.Product = null;
-                    }
+                    // Brands saved with active product association
                 }
             }
             catch (DbUpdateConcurrencyException)
